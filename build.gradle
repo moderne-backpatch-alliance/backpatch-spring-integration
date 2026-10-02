@@ -348,6 +348,10 @@ configure(javaProjects) { subproject ->
 
 		environment 'SI_FATAL_WHEN_NO_BEANFACTORY', 'true'
 
+		if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+			systemProperty 'java.io.tmpdir', '/private/tmp'
+		}
+
 		useJUnitPlatform()
 
 		enableAssertions = false
