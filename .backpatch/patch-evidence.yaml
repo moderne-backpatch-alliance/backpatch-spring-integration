@@ -1,0 +1,18 @@
+schema: osera-patch-evidence/0.1.0
+producer: moderne
+release: 5.5.20.1-backpatch-00001
+baseline: v5.5.20+backpatch.baseline
+fixes:
+  - cve: CVE-2026-40987
+    upstream: https://nvd.nist.gov/vuln/detail/CVE-2026-40987
+    artifacts:
+      - org.springframework.integration:spring-integration-file
+    note: New in this release; ported onto 5.5.20; fixed at 5.5.20.1-backpatch-00001 (backpatch-spring-integration@20b75d3).
+tests:
+  commit: 20b75d3dee9c2d81ad864ffde9cccb0c190822b8
+  command: ./gradlew --no-daemon --offline -I <alliance>/ecosystem/gradle/init-backpatch.gradle -Dbackpatch.version=5.5.20.1-backpatch-00001 -Dbackpatch.repository.url=<repository> -Dbackpatch.compile.jdk=14 --rerun-tasks :spring-integration-file:test --tests org.springframework.integration.file.FileWritingMessageHandlerTests --tests org.springframework.integration.file.remote.synchronizer.AbstractRemoteFileSynchronizerTests :spring-integration-ftp:test --tests org.springframework.integration.ftp.dsl.FtpTests
+  runtime: OpenJDK 14.0.2 (Zulu, x64), Gradle wrapper of the repository
+  report: spring-integration-file-5.5.20.1-backpatch-00001-tests.zip
+  report_sha256: 714ff549319cc9b4c64b14a8144efb03731ed805bce956b00c504afe4ccd6c67
+  result: pass
+  note: the regression tests the fix commit touched, 57 test(s) run, 0 failed, 4 skipped (3 enabled on Windows only, 1 disabled upstream), at the tested commit
