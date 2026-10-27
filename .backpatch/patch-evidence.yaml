@@ -1,6 +1,6 @@
 schema: osera-patch-evidence/0.1.0
 producer: moderne
-release: 5.5.20.1-backpatch-00002
+release: 5.5.20.1-backpatch-00003
 baseline: v5.5.20+backpatch.baseline
 fixes:
   - cve: CVE-2026-40987
@@ -18,12 +18,20 @@ fixes:
     basis: adapted
     artifacts:
       - org.springframework.integration:spring-integration-http
-    note: New in this release; ported onto 5.5.20; fixed at 5.5.20.1-backpatch-00002 (backpatch-spring-integration@a6ff930). Opt-in, as upstream; with no allowed patterns configured every class still deserializes, so an application restricts the classes SerializingHttpMessageConverter accepts with setAllowedPatterns or addAllowedPatterns.
+    note: Carried from 5.5.20.1-backpatch-00002; ported onto 5.5.20; fixed at 5.5.20.1-backpatch-00002 (backpatch-spring-integration@a6ff930). Opt-in, as upstream; with no allowed patterns configured every class still deserializes, so an application restricts the classes SerializingHttpMessageConverter accepts with setAllowedPatterns or addAllowedPatterns.
+  - cve: CVE-2026-59324
+    upstream_fix_url: https://github.com/spring-projects/spring-integration/commit/67e8f53f7ddaa29302089c002a869d18e326029d
+    advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2026-59324
+    patch_commit_url: https://github.com/moderne-backpatch-alliance/backpatch-spring-integration/commit/e474151
+    basis: adapted
+    artifacts:
+      - org.springframework.integration:spring-integration-core
+    note: New in this release; ported onto 5.5.20; fixed at 5.5.20.1-backpatch-00003 (backpatch-spring-integration@e474151). Behaviour change, as upstream; a fluxTransform function that emits raw payloads now fails with IllegalStateException, so it must emit Messages itself.
 tests:
-  commit: a6ff930658d9db465a4bf4cbe2b9414c7e6a828a
-  command: ./gradlew --no-daemon -I <alliance>/ecosystem/gradle/init-backpatch.gradle -Dbackpatch.version=5.5.20.1-backpatch-00002 -Dbackpatch.repository.url=file:///nonexistent -Dbackpatch.compile.jdk=14 :spring-integration-http:test --rerun-tasks --continue
+  commit: e474151006ba04b6279cc77132985aa8cdf7f8e2
+  command: ./gradlew --no-daemon -I <alliance>/ecosystem/gradle/init-backpatch.gradle -Dbackpatch.version=5.5.20.1-backpatch-00003 -Dbackpatch.repository.url=file:///nonexistent -Dbackpatch.compile.jdk=14 :spring-integration-core:test --rerun-tasks --continue
   runtime: OpenJDK 14.0.2+12 (Zulu14.29+23-CA, x64 under Rosetta 2), Gradle 7.4.2 wrapper of the repository
-  report: spring-integration-http-5.5.20.1-backpatch-00002-tests.zip
-  report_sha256: 61197834dd05121cc089658d64f03659857698e45d209469a5271ca04aa41fb0
+  report: spring-integration-core-5.5.20.1-backpatch-00003-tests.zip
+  report_sha256: 439d45df5f4f798088db05c719a9c6597d8b2a90aa430db9c8b0d1dfb786eca4
   result: pass
-  note: the full module suites (spring-integration-http 227 tests run), 0 failed, 0 errors, 1 skipped, at the tested commit
+  note: the full module suites (spring-integration-core 2229 tests run), 0 failed, 0 errors, 19 skipped, at the tested commit
